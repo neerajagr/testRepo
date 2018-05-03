@@ -26,10 +26,14 @@ class SimplePostBehavior(TaskSet):
 
     @task
     def post_random_payload(self):
-        p = self.payloads[randint(0, self.length)]
-        #print(p)
-        self.client.request("GET", "{}".format(p.get('url')))
-        #self.client.post('/', json={'name': p.get('name'), 'gender': p.get('gender')})
+        l_inputJSON = self.payloads[randint(0, self.length)]
+        weight = l_inputJSON.get('weight',1)
+        l_method = l_inputJSON.get('method','GET')
+        l_url = l_inputJSON.get('url','/')
+        l_headers = l_inputJSON.get('headers',None)
+        l_cookies = l_inputJSON.get('cookies',None)
+        #self.client.request("{}".format(l_inputJSON.get('method')), "{}".format(l_inputJSON.get('url')),headers=l_headers,cookies=l_cookies)
+        self.client.request("{}".format(l_method), "{}".format(l_url),headers=l_headers,cookies=l_cookies)
 
 
 class MyLocust(HttpLocust):
