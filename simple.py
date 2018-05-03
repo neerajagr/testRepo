@@ -13,7 +13,7 @@ class UserBehavior(TaskSet):
 
     @task
     def index(self):
-        self.client.get('/contents/v2/page/SC_Level_1_480487?state=Live&storeId=10151')
+        self.client.get('/l/lingerie/bras/push-up-bras-n-ca1kz')
 
 
 class MyLocust(HttpLocust):
