@@ -1,14 +1,29 @@
 [
   {
-    "url": "/contents/v2/page/SC_Level_1_480487?state=Live&storeId=10151"   
+    "method" : "GET",
+    "url": "/contents/v2/page/SC_Level_1_480487?state=Live&storeId=10151"
   },
   {
-    "url": "/contents/v2/page/SC_Level_1_480488?state=Live&storeId=10151"
-  },
+		"target" : "http://api-preprod.marksandspencer.com",
+		"url" : "/contents/v2/page/SC_Level_1_480487?state=Live&storeId=10151",
+		"method" : "GET",
+		"headers" : {"Authorization": "secretkey=rXNwoqrmfianTwsx",
+					 "Content-Type": "application/json"},
+		"cookies" : {},
+		"min_wait" : 1500,
+		"max_wait" : 5000,
+		"no-web" : "Y",
+		"test_time" : "1h",
+		"load" : 10000,
+		"requests_spun" : 10,
+		"locusts" : "Fesk_Skincare_PLP"
+	},
   {
+    "method" : "GET",
     "url": "/contents/v2/page/SC_Level_1_480489?state=Live&storeId=10151"
   },
   {
+    "method" : "GET",
     "url": "/contents/v2/page/SC_Level_1_480490?state=Live&storeId=10151"
   }
 ]
