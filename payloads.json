@@ -1,6 +1,7 @@
 [
   {
     "method" : "GET",
+    "weight" : "3",
     "url": "/contents/v2/page/SC_Level_1_480487?state=Live&storeId=10151"
   },
   {
@@ -9,6 +10,7 @@
 	"headers" : {"Authorization": "secretkey=rXNwoqrmfianTwsx",
 				 "Content-Type": "application/json"},
 	"cookies" : {},
+	"weight" : "1",
 	"min_wait" : 1500,
 	"max_wait" : 5000,
 	"no-web" : "Y",
@@ -19,10 +21,12 @@
   },
   {
     "method" : "GET",
+    "weight" : "2",
     "url": "/contents/v2/page/SC_Level_1_480489?state=Live&storeId=10151"
   },
   {
     "method" : "GET",
+    "weight" : "1",
     "url": "/contents/v2/page/SC_Level_1_480490?state=Live&storeId=10151"
   }
 ]
