@@ -1,1 +1,10 @@
-tree designed
+apiVersion: v1
+name: locust-runner
+version: 1
+description: to execute the API performance test using Locusts
+home: https://github.com/neerajagr/testRepo
+sources:
+  - https://github.com/neerajagr/testRepo
+maintainers:
+  - name: MNS-Dev
+email: nagarwal16@sapient.com
