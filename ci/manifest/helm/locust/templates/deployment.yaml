@@ -1,0 +1,81 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicas }}
+  # We dont need a large deployment history limit as Helm keeps it's own
+  # history
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      namespace: {{ .Values.namespace }}
+      labels:
+        app: {{ template "fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+      containers:
+      - name: server
+        image: {{ template "docker-image" . }}
+        imagePullPolicy: Always
+        ports:
+        # The port that our container listens for HTTP requests on
+        - containerPort: {{ .Values.dockerPort }}
+          name: http
+        env:
+          - name: JAVA_OPTS
+            value: -Dspring.profiles.active={{ .Values.profile }} -Xms512m -Xmx2048m
+          - name: SECRETS_STOCK_SERVERNAME
+            valueFrom:
+                secretKeyRef:
+                   name: kv-secrets
+                   key:  sql-server-0001-server-name
+          - name: SECRETS_ADMIN_USERNAME
+            valueFrom:
+                secretKeyRef:
+                    name: kv-secrets
+                    key:  sql-server-0001-admin-username
+          - name: SECRETS_ADMIN_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                    name: kv-secrets
+                    key:  sql-server-0001-admin-password
+          - name: SECRETS_KAFKA_BOOTSTRAP_SERVERS
+            valueFrom:
+                secretKeyRef:
+                    name: kafka-secret
+                    key:  kafka-bootstrap-servers
+          - name: SECRETS_KAFKA_GROUP_ID
+            valueFrom:
+                secretKeyRef:
+                    name: kafka-secret
+                    key:  kafka-groupid
+          - name: SECRETS_KAFKA_TOPIC
+            valueFrom:
+                secretKeyRef:
+                    name: kafka-secret
+                    key:  kafka-topic
+
+              
+      {{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "fullname" . }}
+topologyKey: kubernetes.io/hostname
