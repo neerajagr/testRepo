@@ -1,1 +1,41 @@
-#if needed run time parameters
+# cluster: dev
+namespace: api-digitalservices-dev
+
+dockerImage: neerajlnm/mns-locust-image
+# dockerTag: 1.0.5
+# dockerPort: 8080
+
+# Container environment variables
+ENV:
+ ROLE=standalone
+ TARGET_HOST=https://www.sit2.marksandspencer.com/
+ LOCUST_FILE=https://raw.githubusercontent.com/neerajagr/testRepo/master/simple.py 
+ SLAVE_MUL=4
+ AUTOMATIC=False
+
+# Profile
+profile: dev  -Xms512m -Xmx2048m
+
+# For production always higher than 1, because if one pod dies your app will be unavailable until the pod recovers.
+replicas: 2
+replicasMax: 4
+
+# Limits
+cpuTargetPercentage: 25
+
+ingress:
+  name: mnsLocustTest
+  subdomain: apps
+
+  # Mark ssl as true to enable SSL on this service
+  ssl: false
+
+  access_policy: public
+
+  # Mark metric as true to enable custom metrics for your application
+  metric: true
+
+resources:
+  requests:
+    memory: 100Mi
+cpu: 200m
