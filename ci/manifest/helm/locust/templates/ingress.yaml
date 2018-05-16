@@ -6,8 +6,8 @@ metadata:
   labels:
     app: {{ template "fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    #release: "{{ .Release.Name }}"
+    #heritage: "{{ .Release.Service }}"
   annotations:
   {{- if eq .Values.ingress.access_policy "public" }}
     ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
@@ -40,4 +40,4 @@ spec:
           - path: /
             backend:
               serviceName: {{ template "fullname" . }}
-servicePort: http
+              servicePort: http
