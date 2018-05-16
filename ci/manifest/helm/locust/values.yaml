@@ -3,7 +3,7 @@ namespace: api-digitalservices-dev
 
 dockerImage: neerajlnm/mns-locust-image
 # dockerTag: 1.0.5
-# dockerPort: 8080
+dockerPort: 8089
 
 # Container environment variables
 ENV:
