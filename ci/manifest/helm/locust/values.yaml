@@ -4,7 +4,7 @@ namespace: api-digitalservices-dev
 dockerImage: registry.opensource.zalan.do/tip/docker-locust
 dockerTag: latest
 dockerPort: 8089
-args: -i --rm -p 8089:8089
+args: -i --rm -v $PWD/reports:/opt/reports -v ~/.aws:/root/.aws -v $PWD/:/opt/script -v $PWD/credentials:/meta/credentials -p 8089:8089 -e ROLE=standalone -e TARGET_HOST=https://content-v2.perf.apis.devops.mnscorp.net -e LOCUST_FILE=https://raw.githubusercontent.com/neerajagr/testRepo/master/simple.py -e SLAVE_MUL=4 -e AUTOMATIC=False registry.opensource.zalan.do/tip/docker-locust
 
 # Container environment variables
 ENV:
