@@ -8,10 +8,10 @@ dockerImage: neerajlnm/mns-locust-image
 # Container environment variables
 ENV:
  ROLE=standalone
- TARGET_HOST=https://content-v2.perf.apis.devops.mnscorp.net
- LOCUST_FILE=https://raw.githubusercontent.com/neerajagr/testRepo/master/simple.py 
- SLAVE_MUL=4
- AUTOMATIC=False
+ TARGET_HOST: https://content-v2.perf.apis.devops.mnscorp.net
+ LOCUST_FILE: https://raw.githubusercontent.com/neerajagr/testRepo/master/simple.py 
+ SLAVE_MUL: 4
+ AUTOMATIC: False
 
 # Profile
 profile: dev  -Xms512m -Xmx2048m
