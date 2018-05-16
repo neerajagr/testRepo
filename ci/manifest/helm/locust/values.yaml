@@ -24,7 +24,7 @@ replicasMax: 4
 cpuTargetPercentage: 25
 
 ingress:
-  name: mnsLocustTest
+  name: mnslocust
   subdomain: apps
 
   # Mark ssl as true to enable SSL on this service
