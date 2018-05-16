@@ -33,36 +33,49 @@ spec:
             value: -Dspring.profiles.active={{ .Values.profile }} -Xms512m -Xmx2048m
           - name: SECRETS_STOCK_SERVERNAME
             valueFrom:
-                secretKeyRef:
-                   name: kv-secrets
-                   key:  sql-server-0001-server-name
+                 secretKeyRef:
+                    name: kv-secrets
+                    key:  sql-server-0001-server-name
           - name: SECRETS_ADMIN_USERNAME
             valueFrom:
-                secretKeyRef:
+                 secretKeyRef:
                     name: kv-secrets
                     key:  sql-server-0001-admin-username
           - name: SECRETS_ADMIN_PASSWORD
             valueFrom:
-                secretKeyRef:
+                 secretKeyRef:
                     name: kv-secrets
                     key:  sql-server-0001-admin-password
-          - name: SECRETS_KAFKA_BOOTSTRAP_SERVERS
+          - name: SECRETS_STOCK_USERNAME1
             valueFrom:
                 secretKeyRef:
-                    name: kafka-secret
-                    key:  kafka-bootstrap-servers
-          - name: SECRETS_KAFKA_GROUP_ID
+                    name: user-secrets
+                    key:  username1
+          - name: SECRETS_STOCK_PASSWORD1
             valueFrom:
                 secretKeyRef:
-                    name: kafka-secret
-                    key:  kafka-groupid
-          - name: SECRETS_KAFKA_TOPIC
+                    name: user-secrets
+                    key:  password1
+          - name: SECRETS_STOCK_USERNAME2
             valueFrom:
                 secretKeyRef:
-                    name: kafka-secret
-                    key:  kafka-topic
-
-              
+                    name: user-secrets
+                    key:  username2
+          - name: SECRETS_STOCK_PASSWORD2
+            valueFrom:
+                secretKeyRef:
+                    name: user-secrets
+                    key:  password2
+          - name: SECRETS_STOCK_USERNAME3
+            valueFrom:
+                secretKeyRef:
+                    name: user-secrets
+                    key:  username3
+          - name: SECRETS_STOCK_PASSWORD3
+            valueFrom:
+                secretKeyRef:
+                    name: user-secrets
+                    key:  password3
       {{- if .Values.resources }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
@@ -78,4 +91,4 @@ spec:
                   operator: In
                   values:
                   - {{ template "fullname" . }}
-topologyKey: kubernetes.io/hostname
+              topologyKey: kubernetes.io/hostname
