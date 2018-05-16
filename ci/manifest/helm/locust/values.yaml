@@ -1,7 +1,7 @@
 # cluster: dev
 namespace: api-digitalservices-dev
 
-dockerImage: neerajlnm/mns-locust-image
+dockerImage: registry.opensource.zalan.do/tip/docker-locust
 # dockerTag: 1.0.5
 dockerPort: 8089
 
