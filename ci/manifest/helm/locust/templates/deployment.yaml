@@ -28,54 +28,13 @@ spec:
         # The port that our container listens for HTTP requests on
         - containerPort: {{ .Values.dockerPort }}
           name: http
+        {{- if .Values.ENV }}
         env:
-          - name: JAVA_OPTS
-            value: -Dspring.profiles.active={{ .Values.profile }} -Xms512m -Xmx2048m
-          - name: SECRETS_STOCK_SERVERNAME
-            valueFrom:
-                 secretKeyRef:
-                    name: kv-secrets
-                    key:  sql-server-0001-server-name
-          - name: SECRETS_ADMIN_USERNAME
-            valueFrom:
-                 secretKeyRef:
-                    name: kv-secrets
-                    key:  sql-server-0001-admin-username
-          - name: SECRETS_ADMIN_PASSWORD
-            valueFrom:
-                 secretKeyRef:
-                    name: kv-secrets
-                    key:  sql-server-0001-admin-password
-          - name: SECRETS_STOCK_USERNAME1
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  username1
-          - name: SECRETS_STOCK_PASSWORD1
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  password1
-          - name: SECRETS_STOCK_USERNAME2
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  username2
-          - name: SECRETS_STOCK_PASSWORD2
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  password2
-          - name: SECRETS_STOCK_USERNAME3
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  username3
-          - name: SECRETS_STOCK_PASSWORD3
-            valueFrom:
-                secretKeyRef:
-                    name: user-secrets
-                    key:  password3
+        {{- range $key, $val := .Values.ENV }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+        {{ end }}
+      {{- end }}
       {{- if .Values.resources }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
