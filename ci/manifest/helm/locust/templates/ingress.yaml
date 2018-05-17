@@ -33,7 +33,7 @@ spec:
           - path: /
             backend:
               serviceName: {{ template "fullname" . }}
-              servicePort: http
+              servicePort: 80
     - host: {{ .Values.ingress.name }}.pre-live.{{ .Values.cluster }}.{{ .Values.ingress.subdomain }}.mnscorp.net
       http:
         paths:
