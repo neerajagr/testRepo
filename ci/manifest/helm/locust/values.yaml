@@ -18,8 +18,8 @@ ENV:
 profile: dev  -Xms512m -Xmx2048m
 
 # For production always higher than 1, because if one pod dies your app will be unavailable until the pod recovers.
-replicas: 2
-replicasMax: 4
+replicas: 1
+replicasMax: 2
 
 # Limits
 cpuTargetPercentage: 50
