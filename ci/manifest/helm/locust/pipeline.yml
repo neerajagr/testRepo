@@ -1,0 +1,43 @@
+
+resource_types:
+  - name: helm
+    type: docker-image
+    source:
+      repository: mnsplatform/concourse-helm-resource
+      tag: "latest"
+
+resources:
+
+  - name: git-repo
+    type: git
+    source:
+     uri: https://github.com/neerajagr/testRepo.git
+     branch: master
+
+  - name: locust-helm-extractor
+    type: helm
+    source:
+     cluster_url: ((secrets.K8_DEV_SERVER))
+     cluster_ca: ((secrets.K8_DEV_CA))
+     token: ((secrets.K8_DEV_TOKEN))
+     namespace: ((secrets.K8_DEV_CLUSTER_NAME))
+     release_name: mnslocust
+
+jobs:
+ # Deploy extractor to the DEV cluster
+ - name: RunLocustTest
+   serial: true
+   plan:
+     - get: git-repo
+       trigger: true
+     - put: locust-helm-extractor
+       params:
+         chart_dir: git-repo/ci/manifest/helm/locust
+         wait_until_ready: true
+         debug: true
+         force: true
+         set_values:
+           namespace: ((secrets.K8_DEV_CLUSTER_NAME))
+           dockerTag: latest
+           cluster: dev
+           profile: dev
